@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import AppRouter, { history } from './routers/AppRouter'
 import configureStore from './store/configureStore'
 import { login, logout } from './actions/auth'
+import { addPost } from './actions/post'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 import 'react-dates/initialize'
@@ -26,8 +27,17 @@ const renderApp = () => {
     }
 }
 
+firebase.database().ref('blog').once('value').then((snapshot) => {
+    const blog = []
+    snapshot.forEach((childSnapshot) => {
+        blog.push({
+            id: childSnapshot.key,
+            content: childSnapshot.val()
+        })
+    })
+    store.dispatch(addPost(blog))
+})
 ReactDOM.render(<LoadingPage />, document.querySelector('#app'))
-
 
 
 firebase.auth().onAuthStateChanged((user) => {

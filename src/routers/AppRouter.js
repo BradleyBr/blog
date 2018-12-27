@@ -2,10 +2,9 @@ import React from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import createHistory from 'history/createBrowserHistory'
 import DashboardPage from '../components/DashboardPage'
-import LoginPage from '../components/LoginPage'
 import NotFoundPage from '../components/NotFoundPage'
-import PrivateRoute from './PrivateRoute'
-import PublicRoute from './PublicRoute'
+import BlogPage from '../components/Blogpage'
+import BlogItem from '../components/BlogItem'
 
 export const history = createHistory()
 
@@ -13,8 +12,9 @@ const AppRouter = () => (
     <Router history={history}>
     <div>  
         <Switch>
-            <PublicRoute path="/" component={LoginPage} exact={true} />
-            <PrivateRoute path="/dashboard" component={DashboardPage} />
+            <Route path="/" component={DashboardPage} exact={true} />
+            <Route path="/create" component={BlogPage} />
+            <Route path="/blog/:id" component={BlogItem} />
             <Route component={NotFoundPage} />
     </Switch>
     </div>
